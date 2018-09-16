@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="elements">
+
+    </div>
+    
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <script>
+        var cats = [
+            {
+                name: "Ricardo",
+                counter: 0,
+                photo: "cat.jpg"
+            },
+            {
+                name: "Thalita",
+                counter: 0,
+                photo: "cat2.jpg"
+            },
+            {
+                name: "Thalita",
+                counter: 0,
+                photo: "cat2.jpg"
+            },
+            {
+                name: "Thalita",
+                counter: 0,
+                photo: "cat2.jpg"
+            },
+            {
+                name: "Thalita",
+                counter: 0,
+                photo: "cat2.jpg"
+            }
+        ]
+
+        // function increment(e){
+        //     let id = e.target.id;
+        //     let index = id.split("-")[1]
+        //     this.cats[index].counter++;
+        //     this.printValueOnPage(index);
+        // }
+
+        // //função que inicializa o valor
+        // function initialize(){
+        //     this.cats.forEach((cat, index) => {
+        //         $('#elements').append(`
+        //             <h1>`+cat.name+`</h1>
+        //             <h2 id="counter-`+index+`">`+cat.counter+`</h2>  
+        //             <img id="cat-`+index+`" src="`+cat.photo+`" alt="">
+        //         `)
+        //         $('#cat-'+index).click((e) => this.increment(e));
+        //     })
+        // }
+
+        // function printValueOnPage(index){
+        //     $('#counter-'+index).html(this.cats[index].counter)
+        // }
+
+        function initialize(){
+            this.cats.forEach((cat, index) => {
+                
+                var img = document.createElement('img');
+                var h1 = document.createElement('h1');
+                var h2 = document.createElement('h2');
+
+                h1.textContent = cat.name;
+                h2.textContent = cat.counter;
+
+                img.src = cat.photo;
+
+                img.addEventListener('click', (function(h2Copy, indexCopy) {
+                        return function() {
+                            let numero = h2Copy.textContent;
+                            h2Copy.textContent = Number(numero) + 1;
+                        };
+                    })(h2, index));
+
+                document.body.appendChild(h1);
+                document.body.appendChild(h2);
+                document.body.appendChild(img);
+            })
+        }
+
+        //inicializando
+        $(window).ready(this.initialize());
+
+
+    </script>
+</body>
+</html>
