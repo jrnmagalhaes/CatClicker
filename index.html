@@ -8,12 +8,6 @@
 </head>
 <body>
 
-    <div id="elements">
-
-    </div>
-    
-
-
     <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -32,17 +26,17 @@
                 photo: "cat2.jpg"
             },
             {
-                name: "Thalita",
+                name: "Maria",
                 counter: 0,
                 photo: "cat2.jpg"
             },
             {
-                name: "Thalita",
+                name: "José",
                 counter: 0,
                 photo: "cat2.jpg"
             },
             {
-                name: "Thalita",
+                name: "Diego",
                 counter: 0,
                 photo: "cat2.jpg"
             }
@@ -72,17 +66,23 @@
         // }
 
         function initialize(){
+            //iterando o array de gatos
             this.cats.forEach((cat, index) => {
                 
+                //criando os elementos que serão adicionados ao DOM
                 var img = document.createElement('img');
                 var h1 = document.createElement('h1');
                 var h2 = document.createElement('h2');
 
+                //conteúdo dos elementos
                 h1.textContent = cat.name;
                 h2.textContent = cat.counter;
-
                 img.src = cat.photo;
 
+                //função de click das fotos que atualiza o contador
+                //Immediately-Invoked Function Expression
+                //a função externa é criada e chamada imadiatamente passando os valores que serão copiados, 
+                //essa função então retorna a função interna que será passado para o listerner
                 img.addEventListener('click', (function(h2Copy, indexCopy) {
                         return function() {
                             let numero = h2Copy.textContent;
