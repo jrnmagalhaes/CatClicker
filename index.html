@@ -8,6 +8,16 @@
 </head>
 <body>
 
+    <ul id="list-of-cats">
+
+    </ul>
+
+    <div id="cat-area">
+
+    </div>
+
+
+
     <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -28,7 +38,7 @@
             {
                 name: "Maria",
                 counter: 0,
-                photo: "cat2.jpg"
+                photo: "cat.jpg"
             },
             {
                 name: "José",
@@ -38,61 +48,46 @@
             {
                 name: "Diego",
                 counter: 0,
-                photo: "cat2.jpg"
+                photo: "cat.jpg"
             }
         ]
 
-        // function increment(e){
-        //     let id = e.target.id;
-        //     let index = id.split("-")[1]
-        //     this.cats[index].counter++;
-        //     this.printValueOnPage(index);
-        // }
-
-        // //função que inicializa o valor
-        // function initialize(){
-        //     this.cats.forEach((cat, index) => {
-        //         $('#elements').append(`
-        //             <h1>`+cat.name+`</h1>
-        //             <h2 id="counter-`+index+`">`+cat.counter+`</h2>  
-        //             <img id="cat-`+index+`" src="`+cat.photo+`" alt="">
-        //         `)
-        //         $('#cat-'+index).click((e) => this.increment(e));
-        //     })
-        // }
-
-        // function printValueOnPage(index){
-        //     $('#counter-'+index).html(this.cats[index].counter)
-        // }
+        function incremetCat(index, h2){
+            this.cats[index].counter++;
+            h2.textContent = this.cats[index].counter;
+        }
 
         function initialize(){
             //iterando o array de gatos
             this.cats.forEach((cat, index) => {
                 
-                //criando os elementos que serão adicionados ao DOM
-                var img = document.createElement('img');
-                var h1 = document.createElement('h1');
-                var h2 = document.createElement('h2');
+                var item = document.createElement('li');
 
-                //conteúdo dos elementos
-                h1.textContent = cat.name;
-                h2.textContent = cat.counter;
-                img.src = cat.photo;
+                item.textContent = cat.name;
 
-                //função de click das fotos que atualiza o contador
-                //Immediately-Invoked Function Expression
-                //a função externa é criada e chamada imadiatamente passando os valores que serão copiados, 
-                //essa função então retorna a função interna que será passado para o listerner
-                img.addEventListener('click', (function(h2Copy, indexCopy) {
+                item.addEventListener('click', (function(catCopy, indexCopy, callback) {
                         return function() {
-                            let numero = h2Copy.textContent;
-                            h2Copy.textContent = Number(numero) + 1;
-                        };
-                    })(h2, index));
+                            $('#cat-area').empty();
+                            let h1 = document.createElement('h1');
+                            let h2 = document.createElement('h2');
+                            let img = document.createElement('img');
 
-                document.body.appendChild(h1);
-                document.body.appendChild(h2);
-                document.body.appendChild(img);
+                            h1.textContent = catCopy.name;
+                            h2.textContent = catCopy.counter;
+                            img.src = catCopy.photo;
+
+                            img.addEventListener('click', function() {
+                                return callback(indexCopy, h2);
+                            });
+
+                            $('#cat-area').append(h1);
+                            $('#cat-area').append(h2);
+                            $('#cat-area').append(img);
+                        };
+                    })(cat, index, this.incremetCat.bind(this)));
+
+
+                $('#list-of-cats').append(item);
             })
         }
 
